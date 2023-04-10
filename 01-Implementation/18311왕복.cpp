@@ -33,8 +33,12 @@ int main() {
 			for (int i = N-1; i >= 0; i--) {
 				K -= v[i];
 
-				if (K <= 0) {
+				if (K < 0) {
 					cout << i + 1;
+					break;
+				}
+				else if (K == 0) {
+					cout << i;
 					break;
 				}
 			}
