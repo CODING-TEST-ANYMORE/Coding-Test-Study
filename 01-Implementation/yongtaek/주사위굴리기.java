@@ -2,15 +2,15 @@ import java.util.*;
 import java.io.*;
 
 public class 주사위굴리기 {
-    static int N, M, x, y, K;
-    static int map[][];
-    static int arr[];
-    static int dice[];
+	static int N, M, x, y, K;
+	static int map[][];
+	static int arr[];
+	static int dice[];
 
-	static int[] dr = { 0, 0, 0, -1, 1 }; 
-	static int[] dc = { 0, 1, -1, 0, 0 };
-    public static void main(String args[]) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+	static int[] dr = {0, 0, 0, -1, 1}; 
+	static int[] dc = {0, 1, -1, 0, 0};
+	public static void main(String args[]) throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer st = new StringTokenizer(br.readLine());
 
 		N = Integer.parseInt(st.nextToken());
@@ -36,9 +36,9 @@ public class 주사위굴리기 {
 		}
 
 		roll();
-    }
+	}
 
-    private static void roll() {
+	private static void roll() {
 		for (int i = 0; i < arr.length; i++) {
 			check(arr[i]);
 		}
@@ -52,18 +52,18 @@ public class 주사위굴리기 {
 			return;
 
 		switch (k) {
-            case 1:
-                right();
-                break;
-            case 2:
-                left();
-                break;
-            case 3:
+			case 1:
+				right();
+				break;
+			case 2:
+				left();
+				break;
+			case 3:
                 up();
-                break;
-            case 4:
-                down();
-                break;
+				break;
+			case 4:
+				down();
+				break;
 		}
 
 		if (map[nr][nc] == 0) {
