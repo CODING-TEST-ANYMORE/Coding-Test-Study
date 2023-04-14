@@ -7,8 +7,8 @@ public class 주사위굴리기 {
     static int arr[];
     static int dice[];
 
-    static int[] dr = {0,0,0,-1,1}; 
-    static int[] dc = {0,1,-1,0,0};
+    static int[] dr = { 0, 0, 0, -1, 1 }; 
+    static int[] di = { 0, 1, -1, 0, 0 };
     public static void main(String args[]) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
@@ -16,7 +16,7 @@ public class 주사위굴리기 {
         N = Integer.parseInt(st.nextToken());
         M = Integer.parseInt(st.nextToken());
         x = Integer.parseInt(st.nextToken()); 
-		y = Integer.parseInt(st.nextToken());
+        y = Integer.parseInt(st.nextToken());
         K = Integer.parseInt(st.nextToken());
 
         map = new int[N][M];
@@ -31,6 +31,7 @@ public class 주사위굴리기 {
         }
 
         st = new StringTokenizer(br.readLine());
+
         for (int i = 0; i < K; i++) {
             arr[i] = Integer.parseInt(st.nextToken());
         }
@@ -46,7 +47,7 @@ public class 주사위굴리기 {
 
     private static void check(int k) {
         int nr = x + dr[k];
-        int nc = y + dc[k];
+        int nc = y + di[k];
 
         if (nr < 0 || nc < 0 || nr >= N || nc >= M)
             return;
@@ -56,8 +57,8 @@ public class 주사위굴리기 {
                 right();
                 break;
             case 2: 
-			    left(); 
-			    break;
+                left(); 
+                break;
             case 3:
                 up();
                 break;
@@ -96,7 +97,7 @@ public class 주사위굴리기 {
         dice[2] = ndice[2];
         dice[3] = ndice[3];
         dice[4] = ndice[5];   
-		dice[5] = ndice[1];
+        dice[5] = ndice[1];
     }
 
     public static void left() {
