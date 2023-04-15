@@ -1,6 +1,6 @@
 import sys
 
-sys.stdin = open("../../../../sds sw/sw samsung/input_2071.txt", "r")
+sys.stdin = open("input_2071.txt", "r")
 
 T = int(input())
 # 여러개의 테스트 케이스가 주어지므로, 각각을 처리합니다.

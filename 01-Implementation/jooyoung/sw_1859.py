@@ -1,6 +1,6 @@
 import sys
 
-sys.stdin = open("../../../../sds sw/sw samsung/input_1859.txt", "r")
+sys.stdin = open("input_1859.txt", "r")
 
 N = int(input())
 for test_case in range(N):
