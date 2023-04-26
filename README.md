@@ -26,6 +26,7 @@
 - 기본적으로 **자신의 이름으로 branch**를 따서 진행
 - 해당 주차에 **자신의 이름으로 폴더** 만들기
 - 해당 폴더 안에 코드 + 공부한 내용 정리 후 **자신의 branch로 push 후 PR 날리기**
+- PR날릴 때 자신이 푼 언어 라벨을 붙여 PR
 - 파일 이름은 \'문제명\'으로 한다.  ex) Coding-Test-Study/04-DFS&BFS/jiyeon/거북이.py
 - PR 메세지는 \'[해당주차] 유형 - 이름\'으로 한다.  ex) [Week 1] Implementation - 지연
 
