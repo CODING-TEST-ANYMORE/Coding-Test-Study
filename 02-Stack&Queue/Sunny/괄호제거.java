@@ -1,10 +1,15 @@
 package Baekjoon;
 // 백준 2800번 - 괄호 제거
 import java.util.*;
+/*
+1. 입력받은 문자열에서 괄호쌍 찾기 --> EX, (()) -> [(0,3), (1,2)]
+2. 괄호 list의 index로 부분집합 만들기
+3. 위에서 만들어진 부분집합을 토대로 string 생성 
+*/
 
 public class Solution_2800 {
     static char[] arr; // 입력 받은 문자열
-    static List<Bracket> brackets = new ArrayList<>(); // 괄호 쌍 담음
+    static List<Bracket> brackets = new ArrayList<>(); // 괄호 쌍 담음 (index, index), ...
     static Set<String> answers = new HashSet<>(); // 정답 담음 --> set을 통한 중복 제거!
 
     static class Bracket{
@@ -33,9 +38,9 @@ public class Solution_2800 {
         answers.add(ans.replaceAll(" ", "")); // 공백제거해서
     }
 
-    public static void makeSubset(int N, int count, boolean[] isSelected) { // 부분집합
+    public static void makeSubset(int N, int count, boolean[] isSelected) { // 부분집합 만들기
         if (count == N) {
-            makeStr(isSelected);
+            makeStr(isSelected); // 만들어진 부분집합을 토대로 sring 생성
             return;
         }
         isSelected[count] = true;
