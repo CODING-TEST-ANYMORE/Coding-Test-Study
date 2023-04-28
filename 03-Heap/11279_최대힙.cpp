@@ -1,26 +1,23 @@
-﻿#define _CRT_SECURE_NO_WARNINGS
-
-#include <iostream>
-#include <algorithm>
+#include <cstdio>
 #include <vector>
+#include <algorithm>
+#include <iostream>
 #include <string>
+
+
 #include <queue>
-#include <stack>
-
-//11279
 using namespace std;
-int N;
 
-stack<int> st;
+priority_queue<int> pq;
 vector<int>v;
-priority_queue<int>pq;
-
+int num;
+int empty_q = 0;
 int main() {
-	cin >> N;
-	int a;
-	for (int i = 0; i < N; i++) {
-		cin >> a;
-		if (a == 0) {
+	cin >> num;
+	int x;
+	for (int i = 0; i < num; i++) {
+		cin >> x;
+		if (x == 0) {
 			if (pq.empty()) {
 				v.push_back(0);
 			}
@@ -30,15 +27,16 @@ int main() {
 			}
 		}
 		else {
-			pq.push(a);
+			pq.push(x);
 		}
+
 	}
 
 	for (int i = 0; i < v.size(); i++) {
 		cout << v[i] << "\n";
 	}
-
-	}
+	return 0;
+}
 
 
 
