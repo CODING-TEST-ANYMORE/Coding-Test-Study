@@ -1,0 +1,84 @@
+﻿
+#  16236 아기상어
+
+
+
+###  포인트 설명
+- 상어와 **가장 가까이 있는 먹을 수 있는 물고기**의 위치를 찾는 게 포인트인 문제라고 생각했다.
+- 보통 저런 문제면 bfs로 풀어주는데 이 문제는 *"거리가 가까운 물고기가 많다면, 가장 위에 있는 물고기, 그러한 물고기가 여러 마리라면, 가장 왼쪽에 있는 물고기를 먹는다."* 라는 조건이 있어서 한번 더 생각해보게 만든 문제였다.
+- 그렇다면 만약 3초 거리에 먹을 수 있는 물고기를 발견하더라도 바로 끝내는 게 아니라  3초 거리에 있는 먹을 수 있는 물고기들을 다 검사 후 그 중 가장 위쪽, 그리고 왼쪽에 있는 물고기를 찾아줘야 한다!
+- ➡️ 이를 다음과 같은 프로세스로 검사해줬다.
+	1. 처음으로 m초 거리에 먹을 수 있는 물고기 발견
+	2.  m초 거리에 먹을 수 있는 물고기를 또 발견할 경우 둘 중 위쪽, 그리고 왼쪽에 있는 물고기를 선택해서 갱신
+	3. 또 먹을 수 있는 물고기를 발견했는데 m+1초 거리다! 그러면 m초 거리에 있는 물고기들을 다 본거니까 물고기 위치 리턴 해줘서 함수 종료
+
+
+
+
+```python
+import sys
+from collections import deque
+input = sys.stdin.readline
+
+dy = [-1, 0, 0, 1]
+dx = [0, -1, 1, 0]
+
+#상어랑 가장 가까운 물고기 위치, 이동하는데 걸리는 시간 찾아주는 함수
+def findNearestFishAndTime(y, x):
+  visit = [[False]*n for _ in range(n)]
+  visit[y][x] = True
+  dq = deque()
+  dq.append((y, x, 0))
+  fish_y, fish_x, time = 0, 0, 0
+  while(dq):
+    y, x, depth = dq.popleft()
+    for i in range(4):
+      ny = y + dy[i]
+      nx = x + dx[i]
+      if(0 <= ny < n and 0 <= nx < n and not visit[ny][nx]):
+        if(0 < space[ny][nx] < sharkSize): #물고기 먹어!!
+          if(time == 0): #처음으로 먹을 수 있는 물고기 발견
+            fish_y, fish_x, time = ny, nx, depth+1
+          elif(time != depth+1):
+            return fish_y, fish_x, time
+          else:
+            if(ny < fish_y or (ny == fish_y and nx < fish_x)):
+              fish_y, fish_x = ny, nx
+        elif(space[ny][nx] == sharkSize or space[ny][nx] == 0): #지나가!!
+          visit[ny][nx] = True
+          dq.append((ny, nx, depth+1))
+  return fish_y, fish_x, time
+
+#----사용부 코드 시작----
+n = int(input())
+space = [list(map(int, input().split())) for _ in range(n)]
+
+fishNum = 0 #남아있는 물고기 수
+eatenFish = 0 #먹은 물고기 수
+sharkSize = 2
+totalTime = 0
+
+for y in range(n):
+  for x in range(n):
+    if(space[y][x] == 0):
+      continue
+    elif(space[y][x] == 9):
+      shark_y, shark_x = y, x
+    else:
+      fishNum += 1
+
+while(fishNum >= 1):
+  y, x, time = findNearestFishAndTime(shark_y, shark_x)
+  if(time == 0): #더 이상 먹을 물고기가 x
+    break
+  space[shark_y][shark_x] = 0 #상어 있던 공간 0됨
+  shark_y, shark_x = y, x #상어 위치 옮기기
+  totalTime += time #시간 더하기
+  eatenFish += 1
+  fishNum -= 1
+  if(eatenFish == sharkSize): #상어가 자기크기만큼 먹었을 경우
+    sharkSize += 1
+    eatenFish = 0
+
+print(totalTime)
+```

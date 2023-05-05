@@ -1,0 +1,55 @@
+﻿
+#  1260 DFS와 BFS
+
+
+
+###  포인트 설명
+-
+
+
+
+
+```python
+import sys
+input = sys.stdin.readline
+from collections import deque
+
+n, m, v = map(int, input().split())
+
+#방문 배열
+visit_dfs = [False] * (n+1)
+visit_bfs = [False] * (n+1)
+
+#양방향 그래프 만들기
+edges = [[] for _ in range(n+1)]
+for i in range(m):
+  v1, v2 = map(int,input().split())
+  edges[v1].append(v2)
+  edges[v2].append(v1)
+for edge in edges:
+  edge.sort()
+
+#재귀 이용해서 dfs구현
+def dfs(x):
+  visit_dfs[x] = True
+  print(x, end=" ")
+  for i in edges[x]:
+    if(visit_dfs[i] == False):
+      dfs(i)
+
+#큐 이용해서 bfs구
+def bfs(x):
+  visit_bfs[x] = True
+  dq = deque([x])
+  while(dq):
+    v = dq.popleft()
+    print(v, end = " ")
+    for i in edges[v]:
+      if(visit_bfs[i] == False):
+        visit_bfs[i] = True
+        dq.append(i)
+
+dfs(v)
+print()
+bfs(v)
+```
