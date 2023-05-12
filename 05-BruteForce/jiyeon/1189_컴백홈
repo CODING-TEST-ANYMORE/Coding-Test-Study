@@ -1,0 +1,38 @@
+﻿
+#  1189 컴백홈
+
+
+###  포인트 설명
+- 한수는 똑똑하여 한번 지나친 곳을 다시 방문하지는 않는다  => 라는 조건이 있는데 이 때, 전체 경로에서 따져주는 것이 아니라 자기가 현재 가는 경로에서 방문한 곳을 또 방문하지 않는다는 의미이다!!
+-  따라서 dfs로 경로를 탐색해주면서 탐색하고 나서는 다시 방문 처리를 True로 바꿔주며 풀어주었다.
+
+```python
+import sys
+input = sys.stdin.readline
+
+dy = [0, 0, 1, -1]
+dx = [1, -1, 0, 0]
+
+R, C, K = map(int, input().split())
+board = [list(input().rstrip()) for _ in range(R)]
+visit = [[False] * C for _ in range(R)]
+visit[R-1][0] = True
+cnt = 0
+
+def dfs(y, x, distance):
+  global cnt
+  visit[y][x] = True
+  if(y == 0 and x == C-1 and distance == K):
+    cnt += 1
+    return
+  for i in range(4):
+    ny, nx = y + dy[i], x + dx[i]
+    if(0 <= ny < R and 0 <= nx < C):
+      if(not visit[ny][nx] and board[ny][nx] != "T"):
+        visit[ny][nx] = True
+        dfs(ny, nx, distance+1)
+        visit[ny][nx] = False
+
+dfs(R-1, 0, 1)
+print(cnt)
+```
