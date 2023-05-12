@@ -1,3 +1,5 @@
+'''큰수 배열을 만들어야하기에 앞에 작은수가 있는지 확인 
+target 숫자를 정해서 이 숫자와 비교한다'''
 import sys
 input = sys.stdin.readline
 n = int(input())
