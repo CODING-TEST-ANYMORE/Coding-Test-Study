@@ -1,0 +1,18 @@
+﻿
+#  10825 국영수
+
+###  포인트 설명
+- -   배열이 주어졌을 때, 기준인 key값을 정의해서 정렬할 수 있는지 물어보는 문제이다.
+
+```python
+import sys
+input = sys.stdin.readline
+
+n = int(input())
+gradeCard = [input().split() for i in range(n)]
+
+gradeCard.sort(key = lambda x: (-int(x[1]), int(x[2]), -int(x[3]), x[0]))
+
+for student in gradeCard:
+  print(student[0])
+```
