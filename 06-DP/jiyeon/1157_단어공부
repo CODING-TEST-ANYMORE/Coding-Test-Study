@@ -1,0 +1,22 @@
+﻿
+#  1157 단어공부
+
+###  포인트 설명
+-
+
+```python
+import sys
+input = sys.stdin.readline
+
+word = input().rstrip().upper() #대소문자 구분 없이
+word_set = list(set(word))
+
+cnt = []
+for char in word_set: #해당 문자의 개수들 세서 저장
+  cnt.append(word.count(char))
+
+if(cnt.count(max(cnt)) > 1): #max값이 두개 이상이면 ?출력
+  print("?")
+else:
+  print(word_set[cnt.index(max(cnt))])
+```

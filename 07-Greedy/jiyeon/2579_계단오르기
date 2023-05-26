@@ -1,0 +1,29 @@
+﻿
+#  2579 계단 오르기
+
+###  포인트 설명
+- i번째 계단으로 가려면
+	-  i-3번까지 올랐을 때의 최대 값 + i-2 계단 점수 + i 계단 점수
+	- i-2번까지 올랐을 때의 최대 값 + i 계단 점수
+- 이 두 가지 경우이다. 둘 중에 최대 값을 dp에 넣어주면 된다.
+```python
+import sys
+input = sys.stdin.readline
+
+n = int(input())
+stair = [int(input()) for _ in range(n)]
+dp = [0 for _ in range(n)] #i+1번째 계단 까지 올랐을 때의 최대 값
+
+#dp[0], dp[1], dp[2] 초기 셋팅
+dp[0] = stair[0]
+if(n > 1):
+  dp[1] = max(dp[0] + stair[1], stair[1])
+if(n > 2):
+  dp[2] = max(dp[0] + stair[2], stair[1]+ stair[2])
+
+for i in range(3, n):
+  dp[i] = max(dp[i-3] + stair[i-1] + stair[i]
+            , dp[i-2] + stair[i])
+
+print(dp[-1])
+```
