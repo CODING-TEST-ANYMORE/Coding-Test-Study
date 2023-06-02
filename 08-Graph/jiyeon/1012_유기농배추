@@ -1,0 +1,47 @@
+﻿
+#  1012 유기농 배추
+
+###  포인트 설명
+- 배추 밭 전체를 돌면서 배추를 발견하면 (=1을 발견)  그 좌표부터 이어진 배추들을 찾아 다 0으로 바꿔주면 된다.
+- 이어진 배추들을 찾는 과정은 bfs로 풀었따.
+```python
+import sys
+input = sys.stdin.readline
+from collections import deque
+
+t = int(input())
+
+dy = [0, 0, 1, -1]
+dx = [1, -1, 0, 0]
+
+#해당 좌표부터 이어진 배추찾기 시작
+def startBfs(i, j):
+  graph[i][j] = 0
+  dq = deque()
+  dq.append((i, j))
+  while(dq):
+    y, x = dq.popleft()
+    for i in range(4):
+      ny = y + dy[i]
+      nx = x + dx[i]
+      if(0 <= ny < n and 0 <= nx < m):
+        if(graph[ny][nx] == 1):
+          graph[ny][nx] = 0
+          dq.append((ny, nx))
+
+for _ in range(t):
+  m, n, k = map(int, input().split())
+  graph = [[0] * m for _ in range(n)]
+  #배추밭 만들기
+  for _ in range(k):
+    x, y = map(int, input().split())
+    graph[y][x] = 1
+  cnt = 0
+  #배추밭 돌면서 배추 찾는 순간 startBfs 호출
+  for i in range(n):
+    for j in range(m):
+      if(graph[i][j] == 1):
+        cnt += 1
+        startBfs(i, j)
+  print(cnt)
+```

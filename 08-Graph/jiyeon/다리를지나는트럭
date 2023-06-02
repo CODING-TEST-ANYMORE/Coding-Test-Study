@@ -1,0 +1,29 @@
+﻿
+#  다리를 지나는 트럭
+
+###  포인트 설명
+-  트럭이 없는 다리는 0, 트럭이 있는 다리는 트럭의 무게인 다리를 만들자.
+- 시작은 다리에 트럭이 하나도 없으므로 0*(다리의 개수)를 deque로 만든다.
+- 시간이 1초씩 증가하면서 계속 다리를 popleft()해주고
+	- 트럭이 하나 올라가도 다리가 감당할 수 있을 경우 => 트럭을 다리에 올려준다.
+	- 감당할 수 없을 경우 => 0을 다리에 올려준다.
+	
+```python
+from collections import deque
+
+def solution(bridge_length, weight, truck_weights):
+    answer = 0
+    now_weight = 0
+    bridge = deque([0]*bridge_length)
+    truck = deque(truck_weights)
+    while bridge:
+        answer += 1
+        now_weight -= bridge.popleft()
+        if truck:
+            if now_weight + truck[0] <= weight:
+                now_weight += truck[0]
+                bridge.append(truck.popleft())
+            else:
+                bridge.append(0)
+    return answer
+```

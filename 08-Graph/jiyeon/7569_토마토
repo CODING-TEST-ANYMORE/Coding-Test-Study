@@ -1,0 +1,68 @@
+﻿
+#  7569 토마토
+
+###  포인트 설명
+- 평소에 푸는 bfs문제랑 비슷한데 삼차원이라는게 좀 신기했던 문제였다!!
+- 토마토박스를 돌면서 익은 토마토가 있는 지점을 dq에 저장해둔다. (이때, dq에 날짜도 같이 저장)
+- 이제 dq를 돌면서 그 지점의 위, 아래, 앞 아래, 오른쪽, 왼쪽에 안 익은 토마토가 있다면 1로 바꿔서 익었다고 표시하고 dq에 넣어준다. 이때, 날짜도 같이 +1해서 넣어준다.
+- while(dq)를 다 돌았다는 의미는 익을 수 있는 토마토가 다 익었다는 의미이므로
+	- 토마토가 다 익은 경우 => 날짜 출력
+	- 토마토가 다 익지 않은 경우 (=토마토가 다 익지 못하는 상황) => -1 출력
+```python
+import sys
+input = sys.stdin.readline
+from collections import deque
+
+#토마토가 모두 익었는지 구하는 함수
+def isAllRipe():
+  unRipeNum = 0
+  for h_i in range(h):
+    for n_i in range(n):
+      for m_i in range(m):
+        if(box[h_i][n_i][m_i] == 0):
+          unRipeNum += 1
+  if(unRipeNum > 0):
+    return False
+  else:
+    return True
+
+dz = [1, -1, 0, 0, 0, 0]
+dy = [0, 0, 1, -1, 0, 0]
+dx = [0, 0, 0, 0, -1, 1]
+
+m, n, h = map(int, input().split())
+box = [[list(map(int, input().split())) for _ in range(n)] for _ in range(h)]
+
+#안 익은 토마토 개수 구하기 & 토마토 찾아서 dq에 넣기
+dq = deque()
+unRipeNum = 0
+for h_i in range(h):
+  for n_i in range(n):
+    for m_i in range(m):
+      v = box[h_i][n_i][m_i]
+      if(v == 0):
+        unRipeNum += 1
+      elif(v == 1):
+        dq.append((h_i, n_i, m_i, 0))
+
+minDay = 0
+if(unRipeNum == 0): #토마토가 모두 익어있는 상태
+  print(0)
+else:
+  while(dq):
+    z, y, x, t = dq.popleft()
+    minDay = max(minDay, t) #최소 일수 갱신
+    for i in range(6):
+      nz, ny, nx = z + dz[i], y + dy[i], x + dx[i]
+      if(0 <= nz < h and 0 <= ny < n and 0 <= nx < m):
+        if(box[nz][ny][nx] == 0):
+          box[nz][ny][nx] = 1
+          dq.append((nz, ny, nx, t+1))
+  #토마토가 모두 익었다! => 며칠인지 출력 아니면 -1 출력
+  if(isAllRipe()):
+    print(minDay)
+  else:
+    print(-1)
+
+
+```
