@@ -1,0 +1,33 @@
+﻿
+#  20006 랭킹전 대기열
+
+###  포인트 설명
+-
+```python
+import sys
+input = sys.stdin.readline
+
+p, m = map(int, input().split())
+room = []
+
+#플레이어 룸 입장
+for i in range(p):
+  level, name = input().split()
+  level = int(level)
+  for r in room:
+    if(len(r) < m and r[0][0] - 10 <= level <= r[0][0] + 10):
+      r.append((level, name))
+      break
+  else:
+    room.append([(level, name)])
+
+#플레이어 출력
+for r in room:
+  if(len(r) == m):
+    print("Started!")
+  else:
+    print("Waiting!")
+  r.sort(key = lambda x : x[1])
+  for p in r:
+    print(*p)
+```
