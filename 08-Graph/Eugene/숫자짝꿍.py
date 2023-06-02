@@ -7,4 +7,4 @@ def solution(x,y):
         return '-1'
     if max(result) == 0:
         return '0'
-    return ''.join((str(i) for i in result))
+    return ''.join((str(i) for i in result)) # 결과
