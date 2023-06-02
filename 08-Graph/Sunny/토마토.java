@@ -74,3 +74,4 @@ public class Solution_7569 {
         System.out.println(bfs());
     }
 }
+
