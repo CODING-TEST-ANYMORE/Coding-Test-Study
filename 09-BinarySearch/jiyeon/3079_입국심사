@@ -1,0 +1,37 @@
+﻿
+#  3079 입국심사
+심사대에 한 명씩 배정하는 식으로 접근하니까 이 심사대에 배정하는 것보다 다른 심사대를 기다리는게 빠른가? 그건 어떻게 다 계산해? 하면서 아예 접근 방식을 못 찾겠어서 결국 구글링 했다!!ㅎㅎ
+한 명씩 배정하는 식으로 접근하는 것이 아니라 특정 시간을 두고 그 시간 안에 몇 명을 처리할 수 있는지 구하는 식으로 접근하면 쉽게 풀리는 것 같은데, 이걸 떠올리기 어려웠던 문제였다,,
+
+###  포인트 설명
+-  총 처리 시간을 기준으로 이분탐색한다!!
+- 해당 시간 안에 몇 명을 심사할 수 있는지 구하고
+	- 친구들보다 많은 사람을 심사할 수 있음 => 시간 줄이기
+	- 이 시간 내에 친구들을 다 심사할 수 없음 => 시간 늘리기
+```python
+import sys
+input = sys.stdin.readline
+
+n, m = map(int, input().split()) #심사대개수, 친구들
+judgingTable = [int(input()) for _ in range(n)]
+
+min_time = 1
+max_time = max(judgingTable)*m
+
+#해당 time내에 몇 명을 심사할 수 있는지 구하는 함수
+def getPossibleCntIn(time):
+  sum = 0
+  for judgingTime in judgingTable:
+    sum += time//judgingTime
+  return sum
+
+while(min_time <= max_time):
+  mid_time = (min_time + max_time)//2
+  cnt = getPossibleCntIn(mid_time)
+  if(cnt >= m): #친구들보다 많은 사람을 심사할 수 있음
+    max_time = mid_time - 1
+  else: #이 시간 내에 친구들을 다 심사할 수 없음
+    min_time = mid_time + 1
+
+print(min_time)
+```
