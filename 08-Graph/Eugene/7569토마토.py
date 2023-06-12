@@ -47,4 +47,4 @@ def bfs():
                 return -1
     return cnt
 
-print(bfs())
+print(bfs()) # 결과

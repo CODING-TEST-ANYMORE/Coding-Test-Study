@@ -31,4 +31,4 @@ for _ in range(t):
                 cnt += 1
                 dfs(i, j, cnt)
 
-    print(cnt)
+    print(cnt) # 결과
