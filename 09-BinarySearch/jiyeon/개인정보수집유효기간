@@ -1,0 +1,28 @@
+﻿
+#  개인정보 수집 유효기간
+
+###  포인트 설명
+-  그대로 구현만 하면 되는 문제이다.
+- 날짜를 비교하는 과정에서 년, 월, 일을 다 비교해주어야 하기 때문에 코드가 수많은 if, else로 더러워져서 이게 맞나...? 해서 구글링을 해보니 "일수"로 계산해서 비교해주면 거어어업나 쉽게 풀 수 있다.🤬
+```python
+def solution(today, terms, privacies):
+    answer = []
+    terms_dict = {}
+    today = calDay(today)
+    #약관-유효기간 저장
+    for term in terms:
+        type, month = term.split(" ")
+        terms_dict[type] = int(month)
+    #유효기간 넘었는지 검사
+    for i in range(len(privacies)):
+        day, type = privacies[i].split(" ")
+        end = calDay(day) + terms_dict[type]*28
+        if(end <= today):
+            answer.append(i+1)
+    return answer
+
+#일수 계산
+def calDay(day):
+    day = list(map(int, day.split(".")))
+    return (day[0]*28*12 + day[1]*28 + day[2])    
+```

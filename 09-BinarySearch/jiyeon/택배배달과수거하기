@@ -1,0 +1,48 @@
+﻿
+#  택배 배달과 수거하기
+나는 구현을 진짜 더럽게 했는데 풀고 나서 다른 분들 풀이 보니까 진짜 너무 깔끔해서 놀랐따ㅎㅎ
+
+###  포인트 설명
+-  최소 거리로 이동하여야 하기 때문에 제일 멀리 있는 집들의 배달&수거부터 해준다.
+-  배달&수거를 끝낸 집은 볼 필요 없으므로 deliveries_end_house, pickups_end_house로 현재 배달&수거해야하는 집들 중 가장 먼 집의 위치를 저장해 놓고 저기부터 처음까지 역순으로 탐색해주었다.
+- 배달해야하는 가장 먼 집, 수거해야하는 가장 먼 집 둘 중에 더 먼 곳을 무조건 갔다 와야 하므로 max(배달해야하는 가장 먼 집, 수거해야하는 가장 먼 집)을 왕복으로 *2해서 더해준다.
+-  
+```python
+def solution(cap, n, deliveries, pickups):
+    answer = 0
+    furthest_house = -1
+    #처음에 들러야할 집들 중 제일 멀리 있는 집 구하기
+    for i in range(n-1, -1, -1):
+        if(deliveries[i] != 0 or pickups[i] != 0):
+            furthest_house = i
+            break
+    deliveries_end_house = furthest_house
+    pickups_end_house = furthest_house
+    #배달하거나 수거할 택배 없을때까지
+    while(furthest_house >= 0):
+        answer += (furthest_house+1)*2 #가장 먼 집에 배달하러 갔다오기
+        deleveris_temp = cap
+        pickups_temp = cap
+        #배달해야 할 제일 먼 집부터 시작해 cap만큼 배달하고 나서의 위치(=배달해야 할 제일 먼 집) 갱신
+        for i in range(deliveries_end_house, -1, -1):
+            if(deleveris_temp - deliveries[i] >= 0):
+                deleveris_temp -= deliveries[i]
+                deliveries[i] = 0
+                deliveries_end_house = i-1
+                continue
+            deliveries[i] -= deleveris_temp
+            deliveries_end_house = i
+            break
+        #수거해야 할 제일 먼 집부터 시작해 cap만큼 수거하고 나서의 위치(=수거해야 할 제일 먼 집) 갱신
+        for i in range(pickups_end_house, -1, -1):
+            if(pickups_temp - pickups[i] >= 0):
+                pickups_temp -= pickups[i]
+                pickups[i] = 0
+                pickups_end_house = i-1
+                continue
+            pickups[i] -= pickups_temp
+            pickups_end_house = i
+            break
+        furthest_house = max(deliveries_end_house, pickups_end_house)
+    return answer
+```
