@@ -1,0 +1,24 @@
+﻿
+#  1914 하노이탑
+
+###  포인트 설명
+-  옮기는 개수는 2**n-1이다.
+-  20 이하일 때만 move함수를 호출해 옮기는 과정 출력
+```python
+import sys
+input = sys.stdin.readline
+
+def move(n, start, end, temp):
+  if(n == 1):
+    print(start, end)
+  else:
+    move(n-1, start, temp, end)
+    move(1, start, end, temp)
+    move(n-1, temp, end, start)
+
+n = int(input())
+
+print(2**n-1)
+if(n <= 20):
+  move(n, "1", "3", "2")
+```
