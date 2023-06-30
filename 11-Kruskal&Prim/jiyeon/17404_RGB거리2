@@ -1,0 +1,42 @@
+﻿
+#  17404 RGB거리 2
+
+###  포인트 설명
+-  
+```python
+import copy
+import sys
+input = sys.stdin.readline
+
+n = int(input())
+cost = [list(map(int, input().split())) for _ in range(n)]
+
+minCost = 1000*1000
+
+#0번째 집에 빨강 칠하는 경우, 초록 칠하는 경우, 파랑 칠하는 경우로 나눠서 진행
+for i in range(3):
+  dp = copy.deepcopy(cost)
+
+  #1번째 집 칠하기
+  dp[1][i] = 2000
+  for p in [1, 2]:
+    if(i+p > 2):
+      dp[1][(i+p)%3] += dp[0][i]
+    else:
+      dp[1][i+p] += dp[0][i]
+
+  #2번째 ~ 마지막 집까지 칠하는 최소비용 구해주기
+  for j in range(2, n):
+    dp[j][0] += min(dp[j-1][1], dp[j-1][2])
+    dp[j][1] += min(dp[j-1][0], dp[j-1][2])
+    dp[j][2] += min(dp[j-1][0], dp[j-1][1])
+
+  #첫 번째 집에 칠한 색깔과 다른 색깔 칠한 마지막집 중 비교해서 최소비용 구하기
+  for p in [1, 2]:
+    if(i+p > 2):
+      minCost = min(minCost, dp[n-1][(i+p)%3])
+    else:
+      minCost = min(minCost, dp[n-1][i+p])
+
+print(minCost)
+```
