@@ -1,0 +1,38 @@
+﻿
+#  1197 최소 스패닝 트리
+
+###  포인트 설명
+-  크루스칼 알고리즘이란 가장 적은 비용으로 모든 노드를 연결하기 위해 사용하는 알고리즘!
+- 적은 비용으로 연결 시켜야 하기 때문에 간선 연결 비용을 오름차순으로 정렬하고 비용이 작은 간선부터 연결!
+- 이 때, 사이클 형성되지 않도록 주의하면서 연결해주기
+```python
+#루트 노드 찾기
+def find(a):
+    if a == parent[a]:  
+        return a
+    parent[a] = find(parent[a])
+    return parent[a]
+
+def union(a, b):
+    a_root = find(a)
+    b_foot = find(b)
+    if b_foot < a_root:
+        parent[a_root] = b_foot
+    else:
+        parent[b_foot] = a_root
+
+v, e = map(int, input().split())
+arr = []
+parent = [i for i in range(v + 1)]
+totalCost = 0
+for i in range(e):
+    a, b, c = map(int, input().split())
+    arr.append((c,a,b))
+arr.sort(key = lambda x: x[0])
+
+for cost, a, b in arr:
+    if find(a) != find(b):  #루트가 같다 => 이미 연결됨
+        union(a, b)
+        totalCost += cost
+print(totalCost)
+```
